@@ -1,0 +1,29 @@
+{
+    "name": "cawaphp/httpclient",
+    "description": "Сáша HttpClient",
+    "keywords": [
+        "cawa",
+        "http"
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "tchiotludo"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cawa\\HttpClient\\": "src"
+        }
+    },
+    "require": {
+        "php": "~7.0",
+        "ext-curl": "*",
+        "cawaphp/cawa" : "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.3"
+    }
+}
