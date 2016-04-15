@@ -30,7 +30,7 @@ trait HttpClientFactory
      */
     private static function httpClient(string $name = null) : Cache
     {
-        if ($return = DI::get(__METHOD__,  $name)) {
+        if ($return = DI::get(__METHOD__, $name)) {
             return $return;
         }
 
@@ -43,7 +43,6 @@ trait HttpClientFactory
             $item->setBaseUri($config);
         }
 
-
-        return DI::set(__METHOD__,  $name, $item);
+        return DI::set(__METHOD__, $name, $item);
     }
 }

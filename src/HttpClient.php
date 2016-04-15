@@ -17,7 +17,7 @@ use Cawa\Http\Request;
 use Cawa\Http\Response;
 use Cawa\HttpClient\Adapter\AbstractClient;
 use Cawa\HttpClient\Adapter\Curl;
-use Cawa\Uri\Uri;
+use Cawa\Net\Uri;
 
 class HttpClient
 {
