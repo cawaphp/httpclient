@@ -25,6 +25,7 @@ abstract class AbstractClient
     const OPTIONS_CONNECT_TIMEOUT = 'CONNECT_TIMEOUT';
     const OPTIONS_PROXY = 'PROXY';
     const OPTIONS_DEBUG = 'DEBUG';
+    const OPTIONS_ACCEPT_ENCODING = 'ACCEPT_ENCODING';
 
     /**
      * @var array
@@ -33,6 +34,7 @@ abstract class AbstractClient
         self::OPTIONS_CONNECT_TIMEOUT => 5000,
         self::OPTIONS_TIMEOUT => 5000,
         self::OPTIONS_DEBUG => true,
+        self::OPTIONS_ACCEPT_ENCODING => true,
     ];
 
     /**
@@ -64,6 +66,23 @@ abstract class AbstractClient
     public function setOption(string $name, $value) : self
     {
         $this->options[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @var callable
+     */
+    protected $progress;
+
+    /**
+     * @param callable $progress
+     *
+     * @return $this
+     */
+    public function setProgress(callable $progress) : self
+    {
+        $this->progress = $progress;
 
         return $this;
     }

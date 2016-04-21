@@ -50,16 +50,33 @@ class Curl extends AbstractClient
         $options = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => true,
-            CURLOPT_TIMEOUT_MS => 5000,
-            CURLOPT_CONNECTTIMEOUT_MS => 5000,
-            CURLOPT_ENCODING => '', //force curl to send all Accept-Encoding available
         ];
 
+        // gzip, deflate
+        if ($this->options[self::OPTIONS_ACCEPT_ENCODING]) {
+            if ($this->options[self::OPTIONS_ACCEPT_ENCODING] == true) {
+                $options[CURLOPT_ENCODING] = ''; //force curl to send all Accept-Encoding available
+            } else {
+                $options[CURLOPT_ENCODING] = $this->options[self::OPTIONS_ACCEPT_ENCODING];
+            }
+        }
+
+        // ssl
         if (isset($this->options[self::OPTIONS_SSL_VERIFY]) && $this->options[self::OPTIONS_SSL_VERIFY] === false) {
             $options[CURLOPT_SSL_VERIFYHOST] = false;
             $options[CURLOPT_SSL_VERIFYPEER] = false;
         }
 
+        // timeout
+        if ($this->options[self::OPTIONS_TIMEOUT]) {
+            $options[CURLOPT_TIMEOUT_MS] = $this->options[self::OPTIONS_TIMEOUT];
+        }
+
+        if ($this->options[self::OPTIONS_CONNECT_TIMEOUT]) {
+            $options[CURLOPT_CONNECTTIMEOUT_MS] = $this->options[self::OPTIONS_CONNECT_TIMEOUT];
+        }
+
+        // proxy
         if (!empty($this->options[self::OPTIONS_PROXY])) {
             $options[CURLOPT_PROXY] = $this->options[self::OPTIONS_PROXY];
         }
@@ -110,8 +127,21 @@ class Curl extends AbstractClient
             }
         }
 
+        // progress
+        if ($this->progress) {
+            $options[CURLOPT_NOPROGRESS] = false;
+            $options[CURLOPT_PROGRESSFUNCTION] = $this->progress;
+            $options[CURLOPT_BUFFERSIZE] = 1024;
+        }
+
+        // user & password
+        if ($request->getUri()->getUser()) {
+            $options[CURLOPT_USERPWD] = $request->getUri()->getUser() .
+                ($request->getUri()->getPassword() ? ':' . $request->getUri()->getPassword() : '');
+        }
+
         // final options
-        $options[CURLOPT_URL] = $request->getUri()->get(false, true);
+        $options[CURLOPT_URL] = $request->getUri()->get(false);
 
         curl_reset($this->resource);
         curl_setopt_array($this->resource, $options);

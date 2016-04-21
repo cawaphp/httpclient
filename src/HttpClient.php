@@ -13,6 +13,7 @@ declare (strict_types=1);
 
 namespace Cawa\HttpClient;
 
+use Cawa\Http\Cookie;
 use Cawa\Http\Request;
 use Cawa\Http\Response;
 use Cawa\HttpClient\Adapter\AbstractClient;
@@ -64,13 +65,28 @@ class HttpClient
     }
 
     /**
+     * @var Cookie[]
+     */
+    protected $cookies = [];
+
+    /**
      * @param Request $request
      *
      * @return Response
      */
     public function send(Request $request)
     {
-        return $this->client->request($request);
+        foreach ($this->cookies as $cookie) {
+            $request->addCookie($cookie);
+        }
+
+        $response =  $this->client->request($request);
+
+        if ($response->getCookies()) {
+            $this->cookies = $response->getCookies();
+        }
+
+        return $response;
     }
 
     /**
