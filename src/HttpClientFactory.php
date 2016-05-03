@@ -19,11 +19,6 @@ use Cawa\HttpClient\HttpClient;
 trait HttpClientFactory
 {
     /**
-     * @var array
-     */
-    private static $container = [];
-
-    /**
      * @param string $name
      *
      * @return Cache
