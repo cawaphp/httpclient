@@ -90,23 +90,23 @@ class HttpClient
     }
 
     /**
-     * @param string $uri
+     * @param string $url
      *
      * @return Request
      */
-    private function getRequest($uri)
+    private function getRequest($url)
     {
-        if ($this->baseUri && substr($uri, 0, 1) != '/') {
+        if ($this->baseUri && substr($url, 0, 1) != '/') {
             throw new \InvalidArgumentException(
-                sprintf("Invalid uri '%s' with baseUri '%s'", $uri, $this->baseUri->get(false))
+                sprintf("Invalid uri '%s' with baseUri '%s'", $url, $this->baseUri->get(false))
             );
         }
 
-        if ($this->baseUri && $uri) {
+        if ($this->baseUri && $url) {
             $uri = clone $this->baseUri;
-            $uri->setPath($uri->getPath() . $uri);
+            $uri->setPath($uri->getPath() . $url);
         } else {
-            $uri = $uri instanceof Uri ? $uri : new Uri($uri);
+            $uri = $url instanceof Uri ? $url : new Uri($url);
         }
 
         return new Request($uri);
