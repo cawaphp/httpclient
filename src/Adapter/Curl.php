@@ -182,6 +182,13 @@ class Curl extends AbstractClient
         if (!empty($this->options[self::OPTIONS_DEBUG])) {
             rewind($options[CURLOPT_STDERR]);
             $log = stream_get_contents($options[CURLOPT_STDERR]);
+
+            if (isset($options[CURLOPT_POSTFIELDS]) && is_array($options[CURLOPT_POSTFIELDS])) {
+                $log .= json_encode($log) . "\r\n";
+            } else if (isset($options[CURLOPT_POSTFIELDS])) {
+                $log .= $options[CURLOPT_POSTFIELDS] . "\r\n";
+            }
+
             if ($response) {
                 $log = $log . "\r\n" . htmlentities(explode("\r\n\r\n", $response)[1]);
             }
