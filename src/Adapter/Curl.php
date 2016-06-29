@@ -185,7 +185,7 @@ class Curl extends AbstractClient
 
             if (isset($options[CURLOPT_POSTFIELDS]) && is_array($options[CURLOPT_POSTFIELDS])) {
                 $log .= json_encode($log) . "\r\n";
-            } else if (isset($options[CURLOPT_POSTFIELDS])) {
+            } elseif (isset($options[CURLOPT_POSTFIELDS])) {
                 $log .= $options[CURLOPT_POSTFIELDS] . "\r\n";
             }
 
