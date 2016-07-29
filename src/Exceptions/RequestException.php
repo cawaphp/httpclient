@@ -24,6 +24,14 @@ class RequestException extends ConnectionException
     protected $response;
 
     /**
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
      * @param Request $request
      * @param Response $response
      * @param int $code

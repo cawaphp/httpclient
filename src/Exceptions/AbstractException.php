@@ -23,6 +23,14 @@ abstract class AbstractException extends \ErrorException
     protected $request;
 
     /**
+     * @return Request
+     */
+    public function getRequest() : Request
+    {
+        return $this->request;
+    }
+
+    /**
      * ConnectionException constructor.
      *
      * @param Request $request
