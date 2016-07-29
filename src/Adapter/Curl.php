@@ -159,7 +159,7 @@ class Curl extends AbstractClient
             'header size' => $infos['header_size'],
             'request size' => $infos['request_size'],
         ]);
-        self::dispatcher()->emit($requestEvent);
+        self::emit($requestEvent);
 
         // generate events for all duration
         $data = [
@@ -171,12 +171,12 @@ class Curl extends AbstractClient
         $event = new ManualTimerEvent('httpClient.nameLookup', $data);
         $event->setDuration($infos['namelookup_time'])
             ->setStart($requestEvent->getStart());
-        self::dispatcher()->emit($event);
+        self::emit($event);
 
         $event = new ManualTimerEvent('httpClient.connect', $data);
         $event->setDuration($infos['connect_time'])
             ->setStart($requestEvent->getStart() + $infos['namelookup_time']);
-        self::dispatcher()->emit($event);
+        self::emit($event);
 
         // debug log
         if (!empty($this->options[self::OPTIONS_DEBUG])) {
