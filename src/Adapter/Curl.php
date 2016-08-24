@@ -147,7 +147,7 @@ class Curl extends AbstractClient
         curl_setopt_array($this->resource, $options);
 
         // send request
-        $requestEvent = new TimerEvent('httpClient.request');
+        $requestEvent = new TimerEvent($this->options[self::OPTIONS_EVENTS_PREFIX] . '.request');
         $response = curl_exec($this->resource);
         $infos = curl_getinfo($this->resource);
 
@@ -168,12 +168,12 @@ class Curl extends AbstractClient
             'code' => $infos['http_code']
         ];
 
-        $event = new ManualTimerEvent('httpClient.nameLookup', $data);
+        $event = new ManualTimerEvent($this->options[self::OPTIONS_EVENTS_PREFIX] . '.nameLookup', $data);
         $event->setDuration($infos['namelookup_time'])
             ->setStart($requestEvent->getStart());
         self::emit($event);
 
-        $event = new ManualTimerEvent('httpClient.connect', $data);
+        $event = new ManualTimerEvent($this->options[self::OPTIONS_EVENTS_PREFIX] . '.connect', $data);
         $event->setDuration($infos['connect_time'])
             ->setStart($requestEvent->getStart() + $infos['namelookup_time']);
         self::emit($event);

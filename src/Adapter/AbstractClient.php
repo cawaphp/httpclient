@@ -18,6 +18,7 @@ use Cawa\Http\Response;
 
 abstract class AbstractClient
 {
+    const OPTIONS_EVENTS_PREFIX = 'EVENTS_PREFIX';
     const OPTIONS_SSL_VERIFY = 'SSL_VERIFY';
     const OPTIONS_SSL_CLIENT_CERTIFICATE = 'SSL_CLIENT_CERTIFICATE';
     const OPTIONS_SSL_CLIENT_KEY = 'SSL_CLIENT_KEY';
@@ -31,6 +32,7 @@ abstract class AbstractClient
      * @var array
      */
     protected $options = [
+        self::OPTIONS_EVENTS_PREFIX => 'httpClient',
         self::OPTIONS_CONNECT_TIMEOUT => 5000,
         self::OPTIONS_TIMEOUT => 5000,
         self::OPTIONS_DEBUG => true,
