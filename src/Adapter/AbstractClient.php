@@ -27,6 +27,8 @@ abstract class AbstractClient
     const OPTIONS_PROXY = 'PROXY';
     const OPTIONS_DEBUG = 'DEBUG';
     const OPTIONS_ACCEPT_ENCODING = 'ACCEPT_ENCODING';
+    const OPTIONS_FOLLOW_REDIRECTION = 'FOLLOW_REDIRECTION';
+    const OPTIONS_MAX_REDIRECTION = 'MAX_REDIRECTION';
 
     /**
      * @var array
@@ -37,6 +39,7 @@ abstract class AbstractClient
         self::OPTIONS_TIMEOUT => 5000,
         self::OPTIONS_DEBUG => true,
         self::OPTIONS_ACCEPT_ENCODING => true,
+        self::OPTIONS_MAX_REDIRECTION => 10,
     ];
 
     /**

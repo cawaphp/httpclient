@@ -81,6 +81,15 @@ class Curl extends AbstractClient
             $options[CURLOPT_PROXY] = $this->options[self::OPTIONS_PROXY];
         }
 
+        // proxy
+        if (!empty($this->options[self::OPTIONS_FOLLOW_REDIRECTION])) {
+            $options[CURLOPT_FOLLOWLOCATION] = $this->options[self::OPTIONS_FOLLOW_REDIRECTION];
+
+            if (!empty($this->options[self::OPTIONS_MAX_REDIRECTION])) {
+                $options[CURLOPT_MAXREDIRS] = $this->options[self::OPTIONS_MAX_REDIRECTION];
+            }
+        }
+
         // debug temporary files
         if (!empty($this->options[self::OPTIONS_DEBUG])) {
             $options[CURLOPT_VERBOSE] = true;

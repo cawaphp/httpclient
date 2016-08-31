@@ -36,6 +36,19 @@ class HttpClient
     }
 
     /**
+     * @param string $name
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function setClientOption(string $name, $value) : self
+    {
+        $this->client->setOption($name, $value);
+
+        return $this;
+    }
+
+    /**
      * @param AbstractClient|null $client
      */
     public function __construct(AbstractClient $client = null)
