@@ -58,7 +58,6 @@ abstract class AbstractException extends \ErrorException
 
         $debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
         foreach ($debug as $index => $backtrace) {
-
             if (isset($backtrace['class']) &&
                 stripos($backtrace['class'], 'Cawa\\HttpClient\\') !== false &&
                 (
