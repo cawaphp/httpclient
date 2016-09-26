@@ -39,7 +39,7 @@ class HttpClient
      * @param string $name
      * @param mixed $value
      *
-     * @return $this
+     * @return $this|self
      */
     public function setClientOption(string $name, $value) : self
     {
@@ -68,7 +68,7 @@ class HttpClient
     /**
      * @param string|uri $uri
      *
-     * @return $this
+     * @return $this|self
      */
     public function setBaseUri($uri) : self
     {

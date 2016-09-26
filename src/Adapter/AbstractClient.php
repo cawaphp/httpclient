@@ -53,7 +53,7 @@ abstract class AbstractClient
      * @param string $name
      * @param $value
      *
-     * @return $this
+     * @return $this|self
      */
     public function setDefaultHeader(string $name, $value)
     {
@@ -66,7 +66,7 @@ abstract class AbstractClient
      * @param string $name
      * @param mixed $value
      *
-     * @return $this
+     * @return $this|self
      */
     public function setOption(string $name, $value) : self
     {
@@ -83,7 +83,7 @@ abstract class AbstractClient
     /**
      * @param callable $progress
      *
-     * @return $this
+     * @return $this|self
      */
     public function setProgress(callable $progress) : self
     {
