@@ -31,10 +31,8 @@ abstract class AbstractException extends \ErrorException
     }
 
     /**
-     * ConnectionException constructor.
-     *
      * @param Request $request
-     * @param int $message
+     * @param string $message
      * @param int $code
      * @param \Throwable $previous
      */
