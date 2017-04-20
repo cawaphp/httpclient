@@ -19,17 +19,17 @@ use Cawa\HttpClient\HttpClient;
 trait HttpClientFactory
 {
     /**
-     * @param string $name
+     * @param string $name config key or class name
      *
      * @return Cache
      */
     private static function httpClient(string $name = null) : Cache
     {
-        if ($return = DI::get(__METHOD__, $name)) {
+        list($container, $config, $return) = DI::detect(__METHOD__, 'httpclient', $name);
+
+        if ($return) {
             return $return;
         }
-
-        $config = DI::config()->get('httpclient/' . $name);
 
         if (is_callable($config)) {
             $item = $config();
@@ -38,6 +38,6 @@ trait HttpClientFactory
             $item->setBaseUri($config);
         }
 
-        return DI::set(__METHOD__, $name, $item);
+        return DI::set(__METHOD__, $container, $item);
     }
 }
