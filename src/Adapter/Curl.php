@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace Cawa\HttpClient\Adapter;
 
@@ -174,7 +174,7 @@ class Curl extends AbstractClient
         $data = [
             'method' => $request->getMethod(),
             'url' => $request->getUri()->get(false),
-            'code' => $infos['http_code']
+            'code' => $infos['http_code'],
         ];
 
         $event = new ManualTimerEvent($this->options[self::OPTIONS_EVENTS_PREFIX] . '.nameLookup', $data);
@@ -223,7 +223,7 @@ class Curl extends AbstractClient
     }
 
     /**
-     * close curl ressource
+     * close curl ressource.
      */
     public function __destruct()
     {

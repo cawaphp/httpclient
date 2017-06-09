@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace Cawa\HttpClient;
 
@@ -93,7 +93,7 @@ class HttpClient
             $request->addCookie($cookie);
         }
 
-        $response =  $this->client->request($request);
+        $response = $this->client->request($request);
 
         if ($response->getCookies()) {
             $this->cookies = $response->getCookies();

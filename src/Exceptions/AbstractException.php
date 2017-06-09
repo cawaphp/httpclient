@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace Cawa\HttpClient\Exceptions;
 
@@ -65,7 +65,6 @@ abstract class AbstractException extends \ErrorException
                         stripos($debug[$index + 1]['class'], 'Cawa\\HttpClient\\') === false
                     )
                 )
-
             ) {
                 $filename = $debug[$index]['file'];
                 $lineno = $debug[$index]['line'];
