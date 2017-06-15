@@ -11,31 +11,51 @@
 
 declare(strict_types = 1);
 
-namespace Cawa\Cache;
+namespace Cawa\HttpClient;
 
 use Cawa\Core\DI;
-use Cawa\HttpClient\HttpClient;
 
 trait HttpClientFactory
 {
     /**
      * @param string $name config key or class name
+     * @param bool $strict
      *
-     * @return Cache
+     * @return HttpClient
      */
-    private static function httpClient(string $name = null) : Cache
+    private static function httpClient(string $name = null, bool $strict = false) : HttpClient
     {
-        list($container, $config, $return) = DI::detect(__METHOD__, 'httpclient', $name);
+        list($container, $config, $return) = DI::detect(__METHOD__, 'httpclient', $name, $strict);
 
         if ($return) {
             return $return;
         }
 
-        if (is_callable($config)) {
+        if (is_null($config) && $strict == false) {
+            $item = new HttpClient();
+        } else if (is_callable($config)) {
             $item = $config();
-        } else {
+        } else if (is_string($config)) {
             $item = new HttpClient();
             $item->setBaseUri($config);
+        } else {
+            $item = new HttpClient();
+
+            if (isset($config['baseUri'])) {
+                $item->setBaseUri($config['baseUri']);
+            }
+
+            if (isset($config['clientOptions'])) {
+                foreach ($config['clientOptions'] as $name => $value) {
+                    $item->setClientOption($name, $value);
+                }
+            }
+
+            if (isset($config['headers'])) {
+                foreach ($config['headers'] as $name => $value) {
+                    $item->getClient()->setDefaultHeader($name, $value);
+                }
+            }
         }
 
         return DI::set(__METHOD__, $container, $item);
