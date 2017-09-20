@@ -14,6 +14,9 @@ declare(strict_types = 1);
 namespace Cawa\HttpClient;
 
 use Cawa\Core\DI;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
 
 trait HttpClientFactory
 {
@@ -33,9 +36,9 @@ trait HttpClientFactory
 
         if (is_null($config) && $strict == false) {
             $item = new HttpClient();
-        } else if (is_callable($config)) {
+        } elseif (is_callable($config)) {
             $item = $config();
-        } else if (is_string($config)) {
+        } elseif (is_string($config)) {
             $item = new HttpClient();
             $item->setBaseUri($config);
         } else {
@@ -60,4 +63,34 @@ trait HttpClientFactory
 
         return DI::set(__METHOD__, $container, $item);
     }
+
+    /**
+     * @param string|null $name
+     * @param bool $strict
+     *
+     * @return Client
+     */
+    private static function guzzle(string $name = null, bool $strict = false) : Client
+    {
+        list($container, $config, $return) = DI::detect(__METHOD__, 'guzzle', $name, $strict);
+
+        if ($return) {
+            return $return;
+        }
+
+        $stack = HandlerStack::create();
+        $stack->setHandler(new CurlHandler());
+        $config['handler'] = $stack;
+
+        if (isset($config['middlewares'])) {
+            foreach ($config['middlewares'] as $class => $options) {
+                $stack->push(new $class($options ?? []));
+            }
+
+            unset($config['middlewares']);
+        }
+
+        return DI::set(__METHOD__, $container, new Client($config));
+    }
+
 }
