@@ -153,14 +153,17 @@ class HttpClient
     /**
      * @param string $uri
      * @param array $data
+     * @param string $payload
      *
      * @return Response
      */
-    public function post(string $uri, array $data = [])
+    public function post(string $uri, array $data = [], string $payload = null)
     {
         $request = $this->getRequest($uri)
             ->setMethod('POST')
-            ->setPosts($data);
+            ->setPosts($data)
+            ->setPayload($payload)
+        ;
 
         return $this->send($request);
     }
@@ -168,14 +171,17 @@ class HttpClient
     /**
      * @param string $uri
      * @param array $data
+     * @param string $payload
      *
      * @return Response
      */
-    public function put(string $uri, array $data = [])
+    public function put(string $uri, array $data = [], string $payload = null)
     {
         $request = $this->getRequest($uri)
             ->setMethod('PUT')
-            ->setPosts($data);
+            ->setPosts($data)
+            ->setPayload($payload)
+        ;
 
         return $this->send($request);
     }
@@ -183,14 +189,17 @@ class HttpClient
     /**
      * @param string $uri
      * @param array $data
+     * @param string|null $payload
      *
      * @return Response
      */
-    public function patch(string $uri, array $data = [])
+    public function patch(string $uri, array $data = [], string $payload = null)
     {
         $request = $this->getRequest($uri)
             ->setMethod('PATCH')
-            ->setPosts($data);
+            ->setPosts($data)
+            ->setPayload($payload)
+        ;
 
         return $this->send($request);
     }
