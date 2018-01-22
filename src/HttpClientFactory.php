@@ -35,7 +35,7 @@ trait HttpClientFactory
         }
 
         if (is_null($config) && $strict == false) {
-            $item = new HttpClient();
+            return new HttpClient();
         } elseif (is_callable($config)) {
             $item = $config();
         } elseif (is_string($config)) {
